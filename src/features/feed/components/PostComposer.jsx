@@ -5,6 +5,7 @@ import { Button } from '../../../components/ui/Button.jsx'
 import { FormInput } from '../../../components/form/FormInput.jsx'
 import { FormTextarea } from '../../../components/form/FormTextarea.jsx'
 import { BASE_URL } from '../../../utils/constant.js'
+import { uploadImage } from '../../../services/uploadImage'
 
 export function PostComposer({
   onSubmit,
@@ -71,22 +72,20 @@ export function PostComposer({
     reset()
   }
 
+
   const handleCreate = async (values) => {
+    let imageUrl = existingImage || ''
+
+    // ✅ upload if new file selected
+    if (imageFile instanceof File) {
+      imageUrl = await uploadImage(imageFile, existingImage)
+    }
+
     const payload = {
       title: values.title,
       content: values.content,
+      imageUrl, // ✅ correct field for GraphQL
     }
-
-    // ✅ IMPORTANT FIX:
-    // If user selected new file → send it
-    // else keep existing image (for edit mode)
-    if (imageFile instanceof File) {
-      payload.image = imageFile
-    } else if (mode === 'edit' && existingImage) {
-      payload.image = existingImage
-    }
-
-
 
     await onSubmit(payload)
     handleClose()

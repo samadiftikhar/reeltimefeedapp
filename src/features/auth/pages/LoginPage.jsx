@@ -18,7 +18,22 @@ export function LoginPage() {
     mode: 'onTouched',
   })
 
-  const onSubmit = (values) => loginMutation.mutate(values)
+  const onSubmit = async(values) =>{
+    try {
+      await    loginMutation.mutateAsync({
+        email: values.email,
+        password: values.password,
+      })
+
+      // ✅ reset form
+      reset()
+
+      // ✅ redirect after success
+      navigate('/login')
+    } catch (err) {
+      // handled in mutation, no crash
+    }
+  }
 
   return (
     <AuthLayout

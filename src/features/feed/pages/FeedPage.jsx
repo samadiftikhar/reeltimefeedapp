@@ -12,9 +12,7 @@ import {
 
 import { useState } from 'react'
 import { Button } from '../../../components/ui/Button.jsx'
-import { usePostSocket } from '../../../hooks/usePostSocket.js'
-import { useQueryClient } from '@tanstack/react-query'
-import { postEventHandler } from '../../../realtime/postEventHandler.js'
+
 
 export function FeedPage() {
   const [page, setPage] = useState(1)
@@ -30,19 +28,6 @@ export function FeedPage() {
   const [selectedPost, setSelectedPost] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
 
-  const queryClient = useQueryClient()
-
-  // ✅ FIXED: SINGLE SOURCE OF TRUTH KEY
-  const queryKey = ['feed', 'posts']
-
-  // ✅ SOCKET (SENIOR CLEAN APPROACH)
-  usePostSocket((data) => {
-    postEventHandler({
-      data,
-      queryClient,
-      queryKey,
-    })
-  })
 
   return (
     <AppLayout>
@@ -72,14 +57,16 @@ export function FeedPage() {
         initialData={selectedPost}
         isSubmitting={createPost.isPending}
         onSubmit={(values) => {
+          const val = { title: values.title, content: values.content, imageUrl: values.imageUrl }
           if (selectedPost) {
             return updatePost.mutateAsync({
               id: selectedPost._id,
-              ...values,
+              postInput: val,
             })
           }
-
-          return createPost.mutateAsync(values).then(() => {
+          return createPost.mutateAsync({
+            postInput: val
+          }).then(() => {
             setPage(1)
           })
         }}

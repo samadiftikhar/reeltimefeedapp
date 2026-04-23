@@ -7,6 +7,7 @@ export function AppLayout({ children }) {
   // Use separate selectors — object selectors return a new reference each render and cause
   // "Maximum update depth exceeded" with Zustand.
   const user = useAuthStore((s) => s.user)
+  const token = useAuthStore((s) => s.token)
   const logout = useAuthStore((s) => s.logout)
 
   return (
@@ -31,10 +32,10 @@ export function AppLayout({ children }) {
             <Button component={Link} to="/feed" color="inherit" size="small">
               Feed
             </Button>
-            {user ? (
+            {token ? (
               <>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  {user.email}
+                  {user?.email}
                 </Typography>
                 <Button
                   onClick={() => {
