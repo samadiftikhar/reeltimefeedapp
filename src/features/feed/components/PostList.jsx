@@ -13,6 +13,7 @@ import { BASE_URL } from '../../../utils/constant.js'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import CustomPagination from '../../../components/common/Pagination.jsx'
+import { useAuthStore } from '../../../app/store/authStore.js'
 
 function formatDate(iso) {
   try {
@@ -38,7 +39,7 @@ export function PostList({
 
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState(null)
-
+  const userId = useAuthStore((s) => s.user?._id)
   if (query.isLoading) return <SkeletonList count={3} />
   if (query.isError) return <ErrorMessage message={query.error?.message} />
 
@@ -95,7 +96,7 @@ export function PostList({
 
           <CardActions sx={{ px: 2, pb: 1 }}>
             {/* LIKE */}
-            <IconButton
+            {/* <IconButton
               onClick={() => onLike(p._id)}
               disabled={likingId === p._id}
             >
@@ -104,7 +105,7 @@ export function PostList({
 
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               {p.likes ?? 0}
-            </Typography>
+            </Typography> */}
 
             {/* VIEW */}
             <IconButton onClick={() => navigate(`/feed/${p._id}`)}>
@@ -112,24 +113,24 @@ export function PostList({
             </IconButton>
 
             {/* DELETE (OPEN MODAL) */}
-            <IconButton
+            {userId === p.creator._id && <IconButton
               onClick={() => {
                 setDeleteTarget(p)
                 setDeleteOpen(true)
               }}
             >
               <DeleteIcon />
-            </IconButton>
+            </IconButton>}
 
             {/* EDIT */}
-            <IconButton
+            {userId === p.creator._id && <IconButton
               onClick={() => {
                 setSelectedPost(p)
                 setIsOpen(true)
               }}
             >
               <EditIcon />
-            </IconButton>
+            </IconButton>}
           </CardActions>
         </Card>
       ))}

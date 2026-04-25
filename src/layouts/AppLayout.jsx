@@ -45,7 +45,7 @@ export function AppLayout({ children }) {
                   variant="outlined"
                   size="small"
                 >
-                  Clear session
+                  Logout
                 </Button>
               </>
             ) : (

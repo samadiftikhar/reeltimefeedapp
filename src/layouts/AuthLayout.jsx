@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export function AuthLayout({ title, subtitle, children, footer }) {
   return (
-    <div className="page-shell">
+    <div className="page-shell flex items-center justify-center">
       <div className="content-container py-10">
         <div className="mx-auto max-w-md">
           <div className="mb-6">
@@ -28,20 +28,6 @@ export function AuthLayout({ title, subtitle, children, footer }) {
             </CardContent>
           </Card>
 
-          <div className="mt-8 text-center text-xs text-slate-500">
-            <Link to="/feed" className="underline">
-              Go to feed
-            </Link>
-            <span className="mx-2">·</span>
-            <a
-              className="underline"
-              href="https://vite.dev"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Vite
-            </a>
-          </div>
         </div>
       </div>
     </div>

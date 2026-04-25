@@ -6,7 +6,6 @@ export const usePostSocket = (onEvent) => {
     const socket = connectSocket()
 
     const handler = (data) => {
-      console.log('📡 SOCKET RECEIVED:', data)
       onEvent?.(data)
     }
 

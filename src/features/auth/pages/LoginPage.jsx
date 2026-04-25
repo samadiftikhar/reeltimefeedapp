@@ -64,9 +64,9 @@ export function LoginPage() {
 
         <Divider />
 
-        <Link className="text-sm underline text-slate-600" to="/reset-password">
+        {/* <Link className="text-sm underline text-slate-600" to="/reset-password">
           Forgot password?
-        </Link>
+        </Link> */}
       </div>
     </AuthLayout>
   )

@@ -95,7 +95,7 @@ export function PostComposer({
   return (
     <Modal open={isOpen} onClose={handleClose}>
       <Box sx={{ width: 'min(640px, 92vw)', mx: 'auto', my: '6vh', p: 3, bgcolor: 'background.paper' }}>
-        <Typography variant="h6" fontWeight={800} mb={2}>
+        <Typography variant="h6" fontWeight={800} sx={{ mb: 1 }}>
           {mode === 'edit' ? 'Edit Post' : 'Create Post'}
         </Typography>
 
@@ -118,7 +118,9 @@ export function PostComposer({
           />
 
           <div>
-            <InputLabel>Upload image</InputLabel>
+            <InputLabel sx={{ mb: 1 }}>
+              Upload image
+            </InputLabel>
 
             <TextField
               type="file"
