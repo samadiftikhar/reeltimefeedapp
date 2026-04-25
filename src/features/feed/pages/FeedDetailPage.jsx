@@ -27,6 +27,7 @@ import { BASE_URL } from '../../../utils/constant.js'
 
 // 🔥 You should create this query
 import { usePostQuery, useDeletePostMutation, useLikePostMutation, useUpdatePostMutation } from '../hooks/useFeed.js'
+import { useAuthStore } from '../../../app/store/authStore.js'
 
 function formatDate(iso) {
   try {
@@ -39,7 +40,7 @@ function formatDate(iso) {
 export function FeedDetailPage() {
   const { postId } = useParams()
   const navigate = useNavigate()
-
+  const userId = useAuthStore((s) => s.user?._id)
   const { data, isLoading, isError, error } = usePostQuery(postId)
   const deletePost = useDeletePostMutation()
   const likePost = useLikePostMutation()
@@ -101,21 +102,24 @@ export function FeedDetailPage() {
 
           {/* ACTIONS */}
           <Stack direction="row" spacing={1} mt={3}>
-            <IconButton onClick={() => likePost.mutate(post._id)}>
+            {/* <IconButton onClick={() => likePost.mutate(post._id)}>
               <FavoriteBorderIcon />
             </IconButton>
 
             <Typography variant="body2">
               {post.likes || 0}
-            </Typography>
+            </Typography> */}
 
-            <IconButton onClick={() => setIsEditOpen(true)}>
-              <EditIcon />
-            </IconButton>
-
-            <IconButton onClick={() => setDeleteOpen(true)}>
-              <DeleteIcon />
-            </IconButton>
+            {userId === post.creator._id && (
+              <IconButton onClick={() => setIsEditOpen(true)}>
+                <EditIcon />
+              </IconButton>
+            )}
+            {userId === post.creator._id && (
+              <IconButton onClick={() => setDeleteOpen(true)}>
+                <DeleteIcon />
+              </IconButton>
+            )}
           </Stack>
         </CardContent>
       </Card>
@@ -149,6 +153,6 @@ export function FeedDetailPage() {
         }}
       />
     </Box>
-        </AppLayout>
+    </AppLayout>
   )
 }
