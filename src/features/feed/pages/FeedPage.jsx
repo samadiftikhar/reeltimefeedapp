@@ -55,11 +55,11 @@ export function FeedPage() {
             Real-time Feed
           </Typography>
         </div>
+        <Button onClick={() => setIsOpen(true)}>
+          Create Post
+        </Button>
       </div>
 
-      <Button onClick={() => setIsOpen(true)}>
-        Create Post
-      </Button>
 
       <PostComposer
         key={selectedPost?._id || 'create'}

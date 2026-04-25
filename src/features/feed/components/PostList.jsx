@@ -44,7 +44,7 @@ export function PostList({
 
   const posts =
     query.data?.posts ?? query.data?.data?.posts ?? query.data?.posts
-  const creators=query.data?.creator??query.data?.data?.creator??query.data?.posts
+  const creators = query.data?.creator ?? query.data?.data?.creator ?? query.data?.posts
   const totalItems = query.data?.totalItems || 0
   const totalPages = Math.ceil(totalItems / rowsPerPage)
   if (!posts || posts.length === 0) {
@@ -152,7 +152,7 @@ export function PostList({
           setDeleteOpen(false)
           setDeleteTarget(null)
         }}
-        
+
       />
 
       <CustomPagination
